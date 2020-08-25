@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const todos = require ('./todosController') //importing todosController as todos
 
+
 /* GET home page. */
 router.get('/todo', todos.index) //triggers todos.index from controller
 router.get('/todo/:id', todos.show)
