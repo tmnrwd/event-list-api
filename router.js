@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const todos = require ('./todosController') //importing todosController as todos
+const events = require ('./eventController') //importing eventController as events
 
 
 /* GET home page. */
-router.get('/todo', todos.index) //triggers todos.index from controller
-router.get('/todo/:id', todos.show)
-router.post('/todo/create', todos.create)
-router.delete('/todo/:id', todos.delete)
-router.put('todo/:id', todos.update) //updating
+router.get('/eventlist', events.index) //triggers events.index from controller
+router.get('/eventlist/:id', events.show)
+router.post('/eventlist/create', events.create)
+router.delete('/eventlist/:id', events.delete)
+router.put('/eventlist/:id', events.update) //updating
 
 module.exports = router; //exporting as module. can't use export default etc. b/c we're not using ES6 or classes
