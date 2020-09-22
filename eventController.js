@@ -3,10 +3,10 @@ const { ObjectId } = require('mongodb');
 const {Event} = require("./models/events")
 
 var MongoClient = require('mongodb').MongoClient;
-/*
-const dbPromise = MongoClient.connect('mongodb://localhost:27017/eventlist').then((client) => client.db('events'))
+
+const dbPromise = MongoClient.connect('mongodb+srv://bob:turnip@cluster0.etoi5.mongodb.net/<eventlist>?retryWrites=true&w=majority').then((client) => client.db('events'))
 const listPromise = dbPromise.then((db) => db.collection('list'))
-*/
+
 
 exports.index = function (req, res) {
 Event.find()            

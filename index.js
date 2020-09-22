@@ -44,7 +44,8 @@ app.post('/auth', async (req, res) => {
 app.listen(port, () => 
 console.log(`Example app listening at http://localhost:${port}`))
 //listening to the port for the thing we sent (I think)
-mongoose.connect('mongodb://localhost/eventlist')
+//mongoose.connect('mongodb://localhost/eventlist')
+mongoose.connect('mongodb+srv://bob:turnip@cluster0.etoi5.mongodb.net/<eventlist>?retryWrites=true&w=majority')
 
 var db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error'));
