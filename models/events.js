@@ -5,7 +5,7 @@ const eventSchema = mongoose.Schema({
     name: String,
     location: String,
     precis: String,
-    date: Date,
+    date: String,
     time: String,
     completed: Boolean
 })
