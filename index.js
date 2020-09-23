@@ -1,4 +1,4 @@
-const express = require('express')      //alternative to using import...
+const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser');
@@ -8,6 +8,7 @@ const cors = require('cors');
 const { restart } = require('nodemon')
 const { User } = require('./models/user');
 const { v4: uuidv4 } = require('uuid');
+const { search } = require('./router');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -15,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use(router);
 
-/*
+
 app.use(async (req, res, next) => {
     const authHeader = req.headers['authorization']
     const user = await User.findOne({token: authHeader})
@@ -23,12 +24,12 @@ app.use(async (req, res, next) => {
       next()
     } else { res.sendStatus(403) }
   })
-  */
 
 app.post('/auth', async (req, res) => {
-    console.log("triggered authenticate. username:", req.body.username, "password:", req.body.password)
+    console.log("triggered authenticate. username:", req.body.username, "password:", req.body.password, "header:", req.headers['authorization'])
     const userSearch = await User.findOne({username: req.body.username})
     if (!userSearch) {
+        console.log("user not found")
         return res.sendStatus(401)
     }
     if (req.body.password != userSearch.password){
@@ -39,6 +40,37 @@ app.post('/auth', async (req, res) => {
     await userSearch.save()
     res.send({token: userSearch.token})
 })
+
+app.post('/auth', async (req, res) => {
+    console.log("triggered authenticate. username:", req.body.username, "password:", req.body.password, "header:", req.headers['authorization'])
+    const userSearch = await User.findOne({username: req.body.username})
+    if (!userSearch) {
+        console.log("user not found")
+        return res.sendStatus(401)
+    }
+    if (req.body.password != userSearch.password){
+        console.log("Password wrong")
+        return res.sendStatus(403)
+    }
+    userSearch.token = uuidv4()
+    await userSearch.save()
+    res.send({token: userSearch.token})
+})
+
+/*
+let testUser = new User({username: "test", password: "testPW"})
+testUser.save()
+.then(doc => {
+    console.log(doc)
+})
+
+
+ User.findOne({username: "bob"})
+.then(doc => {
+    console.log(doc)
+})
+*/
+
 
 
 app.listen(port, () => 
